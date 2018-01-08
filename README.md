@@ -49,10 +49,14 @@ sudo sed -i 's/PARTUUID/#PARTUUID/g' ~/work/run/pi-netboot/rootfs/etc/fstab
 git clone https://github.com/yangxuan8282/rpi3-pxe-docker ~/work/run/pi-netboot
 ```
 
+you may need to edit `~/work/run/pi-netboot/dnsmasq.conf` according to your network
+
 ```
 cd ~/work/run/pi-netboot &&
 docker-compose up -d
 ```
+
+> the default latest tags of image is for armhf, for amd64 use `amd64` tags
 
 - copy from running system
 
