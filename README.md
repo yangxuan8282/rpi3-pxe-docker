@@ -21,6 +21,16 @@ there are two method:
 for example, prepare raspbian: 
 
 ```
+sudo apt update && sudo apt install -y git-core
+```
+
+```
+git clone https://github.com/yangxuan8282/rpi3-pxe-docker ~/work/run/pi-netboot
+```
+
+you may need to edit `~/work/run/pi-netboot/dnsmasq.conf` according to your network
+
+```
 sudo apt install -y curl bsdtar 
 mkdir -p /tmp/raspbian_{boot,root} ~/work/run/pi-netboot/{boot,rootfs} &&
 curl -L https://downloads.raspberrypi.org/raspbian_latest | bsdtar -xvf- -C ~/work/run/pi-netboot/
@@ -46,12 +56,6 @@ sudo sed -i 's/PARTUUID/#PARTUUID/g' ~/work/run/pi-netboot/rootfs/etc/fstab
 ```
 
 ```
-git clone https://github.com/yangxuan8282/rpi3-pxe-docker ~/work/run/pi-netboot
-```
-
-you may need to edit `~/work/run/pi-netboot/dnsmasq.conf` according to your network
-
-```
 cd ~/work/run/pi-netboot &&
 docker-compose up -d
 ```
@@ -74,3 +78,7 @@ then edit `cmdline.txt`:
 echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=`ip route get 1 | awk '{print $NF;exit}'`:/nfsshare,vers=3 rw ip=dhcp rootwait elevator=deadline" | sudo tee ~/work/run/pi-netboot/boot/cmdline.txt &&
 sudo sed -i 's/PARTUUID/#PARTUUID/g' ~/work/run/pi-netboot/rootfs/etc/fstab
 ```
+
+or you can check the official [documentation](https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md)
+
+the nfs server Dockerfile is from [tangjiujun/docker-nfs-server](https://github.com/tangjiujun/docker-nfs-server)
