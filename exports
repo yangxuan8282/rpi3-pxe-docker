@@ -1,0 +1,1 @@
+/nfsshare *(rw,fsid=0,sync,no_subtree_check,no_root_squash)
