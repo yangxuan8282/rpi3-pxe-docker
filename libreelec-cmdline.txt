@@ -1,0 +1,1 @@
+boot=NFS=192.168.2.108:/nfsshare/boot disk=NFS=192.168.2.108:/nfsshare/root ssh ip=dhcp

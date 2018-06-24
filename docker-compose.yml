@@ -8,7 +8,7 @@ services:
     privileged: true
     network_mode: "host"
     volumes:
-      - ./boot:/tftpboot
+      - ./os/boot:/tftpboot
       - ./dnsmasq.conf:/etc/dnsmasq.conf
 
   nfs:
@@ -25,5 +25,5 @@ services:
       - 32765-32768:32765-32768
       - 32765-32768:32765-32768/udp
     volumes:
-#      - ./exports:/etc/exports
-      - ./rootfs:/nfsshare
+      #- ./exports:/etc/exports
+      - ./os:/nfsshare

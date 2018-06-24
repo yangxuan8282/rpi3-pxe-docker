@@ -32,7 +32,7 @@ you may need to edit `~/work/run/pi-netboot/dnsmasq.conf` according to your netw
 
 ```
 sudo apt install -y curl bsdtar 
-mkdir -p /tmp/raspbian_{boot,root} ~/work/run/pi-netboot/{boot,rootfs} &&
+mkdir -p /tmp/raspbian_{boot,root} ~/work/run/pi-netboot/os/{boot,root} &&
 curl -L https://downloads.raspberrypi.org/raspbian_latest | bsdtar -xvf- -C ~/work/run/pi-netboot/
 ```
 
@@ -41,8 +41,8 @@ cd ~/work/run/pi-netboot &&
 sudo losetup --partscan --show --find *-raspbian-stretch-lite.img &&
 sudo mount /dev/loop0p1 /tmp/raspbian_boot &&
 sudo mount /dev/loop0p2 /tmp/raspbian_root &&
-cp -a /tmp/raspbian_boot/* ~/work/run/pi-netboot/boot &&
-sudo cp -a /tmp/raspbian_root/* ~/work/run/pi-netboot/rootfs
+cp -a /tmp/raspbian_boot/* ~/work/run/pi-netboot/os/boot &&
+sudo cp -a /tmp/raspbian_root/* ~/work/run/pi-netboot/os/root
 ```
 
 ```
@@ -51,7 +51,7 @@ sudo losetup -d /dev/loop0
 ```
 
 ```
-echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=`ip route get 1 | awk '{print $NF;exit}'`:/nfsshare,vers=3 rw ip=dhcp rootwait elevator=deadline" | sudo tee ~/work/run/pi-netboot/boot/cmdline.txt &&
+echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=`ip route get 1 | awk '{print $NF;exit}'`:/nfsshare/root,vers=3 rw ip=dhcp rootwait elevator=deadline" | sudo tee ~/work/run/pi-netboot/boot/cmdline.txt &&
 sudo sed -i 's/PARTUUID/#PARTUUID/g' ~/work/run/pi-netboot/rootfs/etc/fstab
 ```
 
@@ -65,7 +65,7 @@ docker-compose up -d
 - copy from running system
 
 ```
-sudo rsync -xa --progress --exclude /home/pi / ~/work/run/pi-netboot/rootfs
+sudo rsync -xa --progress --exclude /home/pi / ~/work/run/pi-netboot/os/root
 ```
 
 ```
@@ -75,7 +75,7 @@ cp -r /boot/* /tftpboot
 then edit `cmdline.txt`:
 
 ```
-echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=`ip route get 1 | awk '{print $NF;exit}'`:/nfsshare,vers=3 rw ip=dhcp rootwait elevator=deadline" | sudo tee ~/work/run/pi-netboot/boot/cmdline.txt &&
+echo "dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=`ip route get 1 | awk '{print $NF;exit}'`:/nfsshare/root,vers=3 rw ip=dhcp rootwait elevator=deadline" | sudo tee ~/work/run/pi-netboot/boot/cmdline.txt &&
 sudo sed -i 's/PARTUUID/#PARTUUID/g' ~/work/run/pi-netboot/rootfs/etc/fstab
 ```
 
