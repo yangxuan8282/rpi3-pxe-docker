@@ -30,6 +30,13 @@ for LibreELEC:
 ./setup-libreelec.sh
 ```
 
-for Lakka, need some tweaks from this [comment](https://github.com/libretro/Lakka-LibreELEC/issues/492#issuecomment-399735924)
+for Lakka, it not work out of box:
+
+use the `setup-libreelec.sh`, just replace the url
+
+after boot run `lakka-firstboot.sh` once from ssh
+
+reboot manually, it should works now
+
 
 the nfs server Dockerfile is from [tangjiujun/docker-nfs-server](https://github.com/tangjiujun/docker-nfs-server)

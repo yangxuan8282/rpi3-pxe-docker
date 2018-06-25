@@ -15,11 +15,13 @@ cd "$(dirname "$0")"
 DEST=$(pwd)
 
 url="http://releases.libreelec.tv/LibreELEC-RPi2.arm-8.2.5.tar"
+#url="http://nightly.builds.lakka.tv/2018-06-24/RPi2.arm/Lakka-RPi2.arm-2.1-devel-20180624011515-r28197-gbf49bc4.tar"
+
 server_ip=$(ip route get 1 | awk '{print $NF;exit}')
 
 mkdir -p os/boot os/root
 
-#bootloader
+rm -rf os/boot/*
 
 wget $url -O- | tar -C os/boot --strip=1 -xf -
 
