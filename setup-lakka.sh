@@ -14,7 +14,7 @@ cd "$(dirname "$0")"
 
 DEST=$(pwd)
 
-url="http://releases.libreelec.tv/LibreELEC-RPi2.arm-8.2.5.tar"
+url="http://nightly.builds.lakka.tv/2018-06-29/RPi2.arm/Lakka-RPi2.arm-2.1-devel-20180629012041-r28197-gbf49bc4.tar"
 
 server_ip=$(ip route get 1 | awk '{print $NF;exit}')
 
@@ -33,6 +33,8 @@ rm -r os/boot/3rdparty os/boot/target
 echo "boot=NFS="$server_ip":/nfsshare/boot disk=NFS="$server_ip":/nfsshare/root quiet ssh ip=dhcp" > os/boot/cmdline.txt
 
 echo "kernel=KERNEL" >> os/boot/config.txt
+
+install -Dm755 lakka-autostart.sh os/root/.config/autostart.sh
 
 docker-compose up -d
 
